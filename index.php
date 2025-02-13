@@ -25,7 +25,7 @@ $resultado = $banco->query($select)->fetchALL();
             <td> <?= $lista ['Id'] ?> </td>
             <td> <?php echo $lista ['Alunos'] ?> </td>
             <td>
-                 <a href="#" class="btn btn-primary">Abrir</a>
+                <a href="./ficha.php?id_alunos=<?= $lista['Id'] ?>" class="btn btn-primary">Abrir</a>
                 <a href="#" class="btn btn-warning">Editar</a> 
                 <a href="#" class="btn btn-danger">Excluir</a> 
             </td>
