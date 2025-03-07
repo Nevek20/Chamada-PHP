@@ -12,8 +12,8 @@
 <body>
     <main>
         <form action="./aluno-cadastrar.php" method="POST">
-            <h2>Formulário</h2>
-            <input type="text" placeholder="ID." name="id">
+            <h2>Cadastrar alunos</h2>
+            <input type="hidden" placeholder="ID." name="id">
             <input type="text" placeholder="Nome." name="nome">
             <input type="text" placeholder="Telefone." name="telefone">
             <input type="texty" placeholder="E-mail." name="email">
@@ -26,5 +26,5 @@
             <input type="submit">
         </form>
     </main>
-</body>
+</body> 
 </html>

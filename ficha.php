@@ -1,27 +1,26 @@
-<?php 
+<?php //abre o PHP
+ 
+$id_alunos = $_GET['id_alunos']; //puxa a tabela id_alunos
 
-$id_alunos = $_GET['id_alunos'];
+$dsn = 'mysql:dbname=bd_chamadinha;host=localhost'; //conexão com o banco
+$user = 'root'; //fala qual usuário vai usar
+$password = ''; //qual senha usará
 
-$dsn = 'mysql:dbname=bd_chamadinha;host=localhost';
-$user = 'root';
-$password = '';
+$banco = new PDO($dsn, $user, $password); //faz a coneção com todas as informações dadas
 
-$banco = new PDO($dsn, $user, $password);
+$select = 'SELECT tb_info_alunos.*, tb_alunos.Alunos FROM tb_info_alunos INNER JOIN tb_alunos ON tb_alunos.Id = tb_info_alunos.id_alunos WHERE tb_info_alunos.id_alunos=' .$id_alunos; //seleciona todas as informações necessárias das tabelas
 
-$select = 'SELECT tb_info_alunos.*, tb_alunos.Alunos FROM tb_info_alunos INNER JOIN tb_alunos ON tb_alunos.Id = tb_info_alunos.id_alunos WHERE tb_info_alunos.id_alunos=' .$id_alunos;   
+$dados = $banco->query($select)->fetch(); //prepara e faz a execução
 
-$dados = $banco->query($select)->fetch();
+echo '<pre>'; //para depuração
 
-echo '<pre>';
+?> <!-- fecha o PHP -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> <!--faz o link com o bootstrap -->
 
-?>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-<main class="container my-5 d-flex justify-content-center align-items-center min-vh-100">
-    <div class="text-center">
-        <img src="./assets/img/<?= $dados['img']?>" alt="Imagem do perfil" style="padding-bottom: 40px;">
-
-        <form action="#" style="max-width: 100%;">
+<main class="container my-5 d-flex justify-content-center align-items-center min-vh-100"> <!-- classe principal da pagina, contém itens em bootstrap -->
+    <div class="text-center"> <!-- div que vai agrupar todo formulario, junto com a foto, contém itens bootstrap para estilização -->
+        <img src="./assets/img/<?= $dados['img']?>" alt="Imagem do perfil" style="padding-bottom: 40px; width: 400px; height: 400px;"> <!-- a imagem da pessoa selecionada -->
+        <form action="#" style="max-width: 100%;"> <!-- abre o formulário-->
             <section class="coluna" style="display: block,;">
                 <div class="mb-3">
                     <label for="Alunos" class="form-label">Nome</label>

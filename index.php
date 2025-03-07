@@ -9,7 +9,7 @@ $banco = new PDO($dsn, $user, $password);
 
 $select = 'SELECT * FROM tb_alunos';
 $resultado = $banco->query($select)->fetchALL();
-
+ 
 //echo '<pre>';
 //var_dump ($resultado);
 ?>
