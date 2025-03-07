@@ -17,10 +17,10 @@
             <input type="text" placeholder="Nome." name="nome">
             <input type="text" placeholder="Telefone." name="telefone">
             <input type="texty" placeholder="E-mail." name="email">
-            <input type="date" placeholder="Data de nascimento." name="data nascimento">
+            <input type="date" placeholder="Data de nascimento." name="nasc">
             <div>
                 <label>Frequente?</label>
-                <input type="checkbox" name="frequencia">
+                <input type="checkbox" name="frequente">
             </div>
             <input type="file" accept="image/*" name="img">
             <input type="submit">

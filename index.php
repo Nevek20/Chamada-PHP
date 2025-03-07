@@ -13,8 +13,9 @@ $resultado = $banco->query($select)->fetchALL();
 //echo '<pre>';
 //var_dump ($resultado);
 ?>
-<main class="container my-5">
+<main class="container my-5">   
     <table class="table table-striped">
+    <button><a href="./form.php">Criar novo aluno</a></button>
         <tr>
             <td>ID</td>
             <td>Nome</td>
@@ -26,8 +27,8 @@ $resultado = $banco->query($select)->fetchALL();
             <td> <?php echo $lista ['Alunos'] ?> </td>
             <td>
                 <a href="./ficha.php?id_alunos=<?= $lista['Id'] ?>" class="btn btn-primary">Abrir</a>
-                <a href="#" class="btn btn-warning">Editar</a> 
-                <a href="#" class="btn btn-danger">Excluir</a> 
+                <a href="./form-editar.php?Id_aluno_alterar=<?= $lista['Id']?>" class="btn btn-warning">Editar</a> 
+                <a href="./aluno-deletar.php?Id=<?= $lista['Id']?>" class="btn btn-danger">Excluir</a> 
             </td>
         </tr>
     <?php } ?>
