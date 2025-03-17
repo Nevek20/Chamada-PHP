@@ -1,36 +1,63 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> <!-- faz conexão com o boostrap -->
-<?php //abre o php
+<?php
+$dsn = 'mysql:dbname=bd_vingadores;host=localhost';
+$user = 'root';
+$pw = '';
 
-$dsn = 'mysql:dbname=bd_chamadinha;host=localhost'; //conexão com o banco
-$user = 'root'; //usuario
-$password = ''; //senha
+$banco = new PDO($dsn, $user, $pw);
 
-$banco = new PDO($dsn, $user, $password); //puxa tudo
+$erro = ""; 
 
-$select = 'SELECT * FROM tb_alunos'; //seleciona na tabela alunos tudo
-$resultado = $banco->query($select)->fetchALL(); //consulta e extrai o resultado
- 
-//echo '<pre>';
-//var_dump ($resultado);
-?> <!-- acaba o php -->
-<main class="container my-5"> <!-- abre o main -->
-    <table class="table table-striped"> <!-- abre uma tabela -->
-    <button><a href="./form.php">Criar novo aluno</a></button> <!-- coloca um botão pra criar um novo aluno -->
-        <tr> <!-- abre uma linha -->
-            <td>ID</td> <!-- coloca uma coluna chamada ID -->
-            <td>Nome</td> <!-- coloca uma coluna chamada Nome -->
-            <td>Ações</td> <!-- coloca uma coluna chamada Ações -->
-        </tr> <!-- fecha a linha -->
-    <?php foreach($resultado as $lista) { ?> <!-- puxa do banco e coloca na lista -->
-        <tr> <!-- abre a linha -->
-            <td> <?= $lista ['Id'] ?> </td> <!-- bota o ID no ID -->
-            <td> <?php echo $lista ['Alunos'] ?> </td> <!-- bota o nome no alunos -->
-            <td> <!-- abre a coluna -->
-                <a href="./ficha.php?id_alunos=<?= $lista['Id'] ?>" class="btn btn-primary">Abrir</a> <!-- botao de abrir -->
-                <a href="./form-editar.php?Id_aluno_alterar=<?= $lista['Id']?>" class="btn btn-warning">Editar</a>  <!-- botao de editar -->
-                <a href="./aluno-deletar.php?Id=<?= $lista['Id']?>" class="btn btn-danger">Excluir</a>  <!-- botao de excluir-->
-            </td> <!-- fecha a coluna -->
-        </tr> <!-- fecha a linha -->
-    <?php } ?> <!-- fecha o php -->
-    </table> <!-- fecha a table -->
-</main> <!-- fecha o main -->
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];  
+    $password = $_POST['password'];  
+
+    $sql = "SELECT * FROM tb_login WHERE login = :login";
+    $stmt = $banco->prepare($sql);
+    $stmt->bindParam(':login', $username);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($user) {
+        var_dump($_POST);
+        if ($password === $user['senha']) {
+            header("Location: inicio.php");
+            exit;
+        } else {
+            $erro = "Senha incorreta.";
+        }
+    } else {
+        $erro = "Usuário não encontrado.";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="login">
+        <h2>Login do QG</h2>
+        <form action="" method="POST" id="loginFormulario">
+            <div class="inputInfos">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="inputInfos">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <?php if ($erro): ?>
+            <p id="mensagemErro" style="color: red;"><?= $erro ?></p>
+        <?php endif; ?>
+        <p id="mensagemErro" style="color: red; display:none;">Usuário ou senha inválidos.</p>
+        <a href="#" id="esqueciSenha" class="esqueci_senha">Esqueci a senha.</a>
+        <a href="cadastrar.php" id="Cadastrar1" class="cadastrar" style="color: #4caf50;">Cadastrar.</a>
+    </div>
+</body>
+</html>
